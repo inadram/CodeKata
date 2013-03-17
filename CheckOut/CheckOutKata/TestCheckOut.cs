@@ -35,7 +35,7 @@ namespace CheckOutKata
         [TestCase(6, 50, 3, 20, 4, 30, 2, 15, 1, 20, 1, 0, 370)]
         [TestCase(6, 50, 3, 20, 4, 30, 2, 15, 2, 20, 1, 0, 390)]
         [TestCase(6, 50, 3, 20, 4, 30, 2, 15, 3, 20, 1, 0, 410)]
-        public void Given_CollectionItemThatContains_Number_Price_A_B_C_When_CalculateTotalPriceCalled_Then_Should_Return_ExpectedTotalPrice(int numberOfA, int priceOfA, int discountRuleForA, int discountValueForA, int numberOfB, int priceOfB, int discountRuleForB, int discountValueForB,int numberOfC,int priceOfC,int discountRuleForC,int discountValueForC, int expectedTotalPrice)
+        public void Given_CollectionItemThatContains_Number_Price_DiscountRule_DiscountValue_For_A_B_C_When_CalculateTotalPriceCalled_Then_Should_Return_ExpectedTotalPrice(int numberOfA, int priceOfA, int discountRuleForA, int discountValueForA, int numberOfB, int priceOfB, int discountRuleForB, int discountValueForB,int numberOfC,int priceOfC,int discountRuleForC,int discountValueForC, int expectedTotalPrice)
         {
             var checkOut = new CheckOut();
             var itemList=new Dictionary<Item, int>();
@@ -44,28 +44,6 @@ namespace CheckOutKata
             itemList.Add(new Item {DiscountRule = discountRuleForC,DiscountValue = discountValueForC,Name = "C",Price = priceOfC},numberOfC );
             int totalPrice = checkOut.CalculateTotalPrice(itemList);
             Assert.That(totalPrice, Is.EqualTo(expectedTotalPrice));
-        }
-    }
-
-    public class Item
-    {
-        public string Name { get; set; }
-        public int Price { get; set; }
-        public int DiscountRule { get; set; }
-        public int DiscountValue { get; set; }
-    }
-
-    public class CheckOut
-    {
-        public int CalculateTotalPrice(Dictionary<Item, int> itemList)
-        {
-            int totalPrice = 0;
-            foreach (var item in itemList)
-            {
-                totalPrice += item.Value*item.Key.Price;
-                totalPrice -= (item.Value/item.Key.DiscountRule)*item.Key.DiscountValue;
-            }
-            return totalPrice;
         }
     }
 }
